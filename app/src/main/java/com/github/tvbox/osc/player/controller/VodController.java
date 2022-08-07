@@ -246,7 +246,7 @@ public class VodController extends BaseController {
                 try {
                     float speed = (float) mPlayerConfig.getDouble("sp");
                     speed += 0.25f;
-                    if (speed > 2)
+                    if (speed > 3)
                         speed = 1f;
                     mPlayerConfig.put("sp", speed);
                     updatePlayerCfgView();
@@ -427,6 +427,15 @@ public class VodController extends BaseController {
                 }
                 Hawk.put(HawkConfig.PLAY_TIME_STEP, step);
                 updatePlayerCfgView();
+            }
+        });
+        // takagen99: Add long press to reset counter
+        mPlayerTimeStepBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Hawk.put(HawkConfig.PLAY_TIME_STEP, 5);
+                updatePlayerCfgView();
+                return true;
             }
         });
     }
