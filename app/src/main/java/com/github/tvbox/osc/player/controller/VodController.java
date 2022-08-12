@@ -140,20 +140,13 @@ public class VodController extends BaseController {
             @Override
             public void run() {
                 hideBottom();
+                Date dNow = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
+                mDate.setText(ft.format(dNow));
+                myHandle.postDelayed(this, 1000);
             }
         };
 
-        //播放界面增加当前时间
-        mHandler = new Handler();
-        myRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Date datetime = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                mDate.setText(dateFormat.format(datetime));
-                mHandler.postDelayed(this, 1000);
-            }
-        };
 
         mGridView.setLayoutManager(new V7LinearLayoutManager(getContext(), 0, false));
         ParseAdapter parseAdapter = new ParseAdapter();
