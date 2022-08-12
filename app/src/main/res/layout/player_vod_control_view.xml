@@ -333,7 +333,7 @@
                 android:layout_gravity="center"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:src="@drawable/vod_play" />
+                android:src="@drawable/vod_pause" />
 
             <TextView
                 android:id="@+id/tv_pause_progress_text"
