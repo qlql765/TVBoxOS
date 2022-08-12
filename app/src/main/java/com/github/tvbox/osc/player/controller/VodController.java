@@ -32,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
@@ -101,6 +103,7 @@ public class VodController extends BaseController {
     TextView mPlayerTimeStartBtn;
     TextView mPlayerTimeSkipBtn;
     TextView mPlayerTimeStepBtn;
+    TextView mDate;
 
     Handler myHandle;
     Runnable myRunnable;
@@ -130,12 +133,25 @@ public class VodController extends BaseController {
         mPlayerTimeStartBtn = findViewById(R.id.play_time_start);
         mPlayerTimeSkipBtn = findViewById(R.id.play_time_end);
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
+        mDate = findViewById(R.id.tv_date);
 
         myHandle=new Handler();
         myRunnable = new Runnable() {
             @Override
             public void run() {
                 hideBottom();
+            }
+        };
+
+        //播放界面增加当前时间
+        mHandler = new Handler();
+        myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Date datetime = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                mDate.setText(dateFormat.format(datetime));
+                mHandler.postDelayed(this, 1000);
             }
         };
 
