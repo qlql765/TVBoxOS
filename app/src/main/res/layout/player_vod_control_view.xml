@@ -305,17 +305,18 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/ts_24" />
 
-        <TextView
-            android:id="@+id/tv_date"
+        <TextClock
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="right"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:padding="@dimen/vs_20"
-            tools:text="11:11:11"
+            android:layout_marginTop="1dp"
+            android:format12Hour="hh:mm:ss"
+            android:format24Hour="HH:mm:ss"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/ts_24" />    
+            android:textSize="24dp"
+            tools:targetApi="jelly_bean_mr1"/>   
 
         <LinearLayout
             android:layout_width="@dimen/vs_280"

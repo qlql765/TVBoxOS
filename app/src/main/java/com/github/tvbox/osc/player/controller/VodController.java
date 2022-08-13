@@ -103,7 +103,6 @@ public class VodController extends BaseController {
     TextView mPlayerTimeStartBtn;
     TextView mPlayerTimeSkipBtn;
     TextView mPlayerTimeStepBtn;
-    TextView mDate;
 
     Handler myHandle;
     Runnable myRunnable;
@@ -133,17 +132,12 @@ public class VodController extends BaseController {
         mPlayerTimeStartBtn = findViewById(R.id.play_time_start);
         mPlayerTimeSkipBtn = findViewById(R.id.play_time_end);
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
-        mDate = findViewById(R.id.tv_date);
 
         myHandle=new Handler();
         myRunnable = new Runnable() {
             @Override
             public void run() {
                 hideBottom();
-                Date dNow = new Date();
-                SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
-                mDate.setText(ft.format(dNow));
-                myHandle.postDelayed(this, 1000);
             }
         };
 
