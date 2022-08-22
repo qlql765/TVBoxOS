@@ -47,16 +47,32 @@ public class App extends MultiDexApplication {
     }
 
     private void initParams() {
-        // Hawk
+        // 默认播放器
         Hawk.init(this).build();
         Hawk.put(HawkConfig.DEBUG_OPEN, false);
         if (!Hawk.contains(HawkConfig.PLAY_TYPE)) {
             Hawk.put(HawkConfig.PLAY_TYPE, 1);
         }
-       // HW Render
+       // 默认解码方式
         if (!Hawk.contains(HawkConfig.IJK_CODEC)) {
             Hawk.put(HawkConfig.IJK_CODEC, "硬解码");
         }
+        //默认首页推荐
+        if (!Hawk.contains(HawkConfig.HOME_REC)) {
+            Hawk.put(HawkConfig.HOME_REC, 2);
+        }
+    /* 
+        默认DNS
+    if (!Hawk.contains(HawkConfig.DOH_URL)) {
+        Hawk.put(HawkConfig.DOH_URL, 2);
+    }
+
+    // 默认Search Mode : Text or Picture
+    if (!Hawk.contains(HawkConfig.SEARCH_VIEW)) {
+        Hawk.put(HawkConfig.SEARCH_VIEW, 2);
+    }
+    */    
+      
     }
 
     public static App getInstance() {
