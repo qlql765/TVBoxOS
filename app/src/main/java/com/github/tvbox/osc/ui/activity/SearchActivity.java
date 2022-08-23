@@ -81,7 +81,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        disableKeyboard(SearchActivity.this);
+        enableKeyboard(SearchActivity.this);
         initView();
         initViewModel();
         initData();
