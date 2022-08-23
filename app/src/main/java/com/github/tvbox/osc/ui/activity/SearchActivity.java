@@ -90,10 +90,10 @@ public class SearchActivity extends BaseActivity {
     /*
      * 禁止软键盘
      * @param activity Activity
-     */
+     
     public static void disableKeyboard(Activity activity) {
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-    }
+    }*/
 
     /*
      * 启用软键盘
