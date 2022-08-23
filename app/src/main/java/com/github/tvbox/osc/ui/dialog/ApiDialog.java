@@ -56,7 +56,7 @@ public class ApiDialog extends BaseDialog {
         tvAddress = findViewById(R.id.tvAddress);
         inputApi = findViewById(R.id.input);
         //内置网络接口在此处添加
-        inputApi.setText(Hawk.get(HawkConfig.API_URL, ""));
+        inputApi.setText(Hawk.get(HawkConfig.API_URL, "https://gitcode.net/qlql765/q/-/raw/master/ql6.json"));
         findViewById(R.id.inputSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
