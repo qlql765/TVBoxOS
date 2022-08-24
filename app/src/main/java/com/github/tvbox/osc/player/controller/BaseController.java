@@ -81,6 +81,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
             }
         });
         mHandler.post(mRunnable);
+        mHandler.post(mVideoSizeRun);
     }
 
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -96,6 +97,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
     private ViewGroup mPauseRoot;
     private TextView mPauseTime;
     private TextView mPlayLoadNetSpeed;
+    private TextView mVideoSize;
 
 
     private Runnable mRunnable = new Runnable() {
@@ -106,7 +108,17 @@ public abstract class BaseController extends BaseVideoController implements Gest
             mHandler.postDelayed(this, 1000);
         }
     };
-
+    
+    private Runnable mVideoSizeRun = new Runnable() {
+        @Override
+        public void run() {
+            String width = Integer.toString(mControlWrapper.getVideoSize()[0]);
+            String height = Integer.toString(mControlWrapper.getVideoSize()[1]);
+            mVideoSize.setText("[ " + width + " X " + height +" ]");
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+    
     @Override
     protected void initView() {
         super.initView();
@@ -118,6 +130,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
         mPauseRoot = findViewWithTag("vod_control_pause");
         mPauseTime = findViewWithTag("vod_control_pause_t");
         mPlayLoadNetSpeed = findViewWithTag("play_load_net_speed");
+        mVideoSize = findViewWithTag("vod_video_size");
     }
 
     @Override
