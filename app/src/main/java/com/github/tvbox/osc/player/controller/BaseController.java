@@ -45,7 +45,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
 
     protected Handler mHandler;
 
-    protected HandlerCallback mHandlerCallback;
+    protected com.github.tvbox.osc.player.controller.BaseController.HandlerCallback mHandlerCallback;
 
     protected interface HandlerCallback {
         void callback(Message msg);
@@ -80,6 +80,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
                 return false;
             }
         });
+        mHandler.post(mRunnable);
     }
 
     public BaseController(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -94,6 +95,17 @@ public abstract class BaseController extends BaseVideoController implements Gest
     private ProgressBar mLoading;
     private ViewGroup mPauseRoot;
     private TextView mPauseTime;
+    private TextView mPlayLoadNetSpeed;
+
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            String format = String.format("%.2fMB/s", (float) mControlWrapper.getTcpSpeed() / 1024.0 / 1024.0);
+            mPlayLoadNetSpeed.setText(format);
+            mHandler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     protected void initView() {
@@ -105,6 +117,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
         mLoading = findViewWithTag("vod_control_loading");
         mPauseRoot = findViewWithTag("vod_control_pause");
         mPauseTime = findViewWithTag("vod_control_pause_t");
+        mPlayLoadNetSpeed = findViewWithTag("play_load_net_speed");
     }
 
     @Override

@@ -280,6 +280,30 @@
                 android:text="00:00"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_24" />
+
+            <TextView
+                android:id="@+id/t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/vs_10"
+                android:paddingLeft="@dimen/vs_10"
+                tools:text="0"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_24" />
+
+            <TextView
+                android:id="@+id/tv_play_load_net_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:padding="@dimen/vs_0"
+                android:paddingStart="@dimen/vs_10"
+                android:paddingLeft="@dimen/vs_10"
+                android:tag="play_load_net_speed"
+                android:text="0000"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_24" />    
         </LinearLayout>
 
 
