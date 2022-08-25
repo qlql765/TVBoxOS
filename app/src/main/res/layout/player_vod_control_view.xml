@@ -281,15 +281,10 @@
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_24" />
 
-            <TextView
-                android:id="@+id/t"
-                android:layout_width="wrap_content"
+            <Space
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/vs_10"
-                android:paddingLeft="@dimen/vs_10"
-                tools:text="0"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_24" />
+                android:layout_weight="0.02"/>
 
             <TextView
                 android:id="@+id/tv_play_load_net_speed"
@@ -334,7 +329,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginTop="70mm"
+                android:layout_marginTop="60mm"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/vs_20"

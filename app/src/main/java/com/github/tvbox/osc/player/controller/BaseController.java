@@ -114,7 +114,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
         public void run() {
             String width = Integer.toString(mControlWrapper.getVideoSize()[0]);
             String height = Integer.toString(mControlWrapper.getVideoSize()[1]);
-            mVideoSize.setText("[ " + width + " X " + height +" ]");
+            mVideoSize.setText(width + " X " + height);
             mHandler.postDelayed(this, 1000);
         }
     };
