@@ -831,25 +831,6 @@ public class PlayActivity extends BaseActivity {
         }
     }
 
-    /*
-    void loadUrl(String url) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mXwalkWebView != null) {
-                    mXwalkWebView.stopLoading();
-                    mXwalkWebView.clearCache(true);
-                    mXwalkWebView.loadUrl(url);
-                }
-                if (mSysWebView != null) {
-                    mSysWebView.stopLoading();
-                    mSysWebView.clearCache(true);
-                    mSysWebView.loadUrl(url);
-                }
-            }
-        });
-    }
-    */
     void loadUrl(String url) {
         runOnUiThread(new Runnable() {
             @Override
@@ -879,8 +860,8 @@ public class PlayActivity extends BaseActivity {
                 }    
             }
         });
+    }
     
-
     void stopLoadWebView(boolean destroy) {
         runOnUiThread(new Runnable() {
             @Override
