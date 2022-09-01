@@ -28,6 +28,7 @@ import com.github.tvbox.osc.util.HawkConfig;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import java.util.Stack;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -202,7 +203,11 @@ public class GridFragment extends BaseLazyFragment {
                         else if(homeSourceBean.isQuickSearch() && Hawk.get(HawkConfig.FAST_SEARCH_MODE, false) && enableFastSearch()){
                     jumpActivity(DetailActivity.class, bundle);
                         }else{
-                            jumpActivity(DetailActivity.class, bundle);
+                            if(video.id == null || video.id.isEmpty()){
+                                jumpActivity(SearchActivity.class, bundle);
+                            }else {
+                                jumpActivity(DetailActivity.class, bundle);
+                            }
                         }
                     }
                 }
@@ -250,7 +255,11 @@ public class GridFragment extends BaseLazyFragment {
                     if (page == 1) {
                         showEmpty();
                     }
+                if(page > maxPage){
+                        Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                if(absXml != null && absXml.msg != null && !absXml.msg.isEmpty())Toast.makeText(getContext(), absXml.msg, Toast.LENGTH_SHORT).show();
                 if (page > maxPage) {
                     gridAdapter.loadMoreEnd();
                 } else {
@@ -267,6 +276,7 @@ public class GridFragment extends BaseLazyFragment {
     private void initData() {
         showLoading();
         isLoad = false;
+        scrollTop();
         sourceViewModel.getList(sortData, page);
     }
 
