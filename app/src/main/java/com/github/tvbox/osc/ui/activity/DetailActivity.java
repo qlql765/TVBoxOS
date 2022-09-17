@@ -92,6 +92,7 @@ public class DetailActivity extends BaseActivity {
     private TextView tvActor;
     private TextView tvDirector;
     private TextView tvDes;
+    private TextView tvPlayUrl;
     private TextView tvPlay;
     private TextView tvSort;
     private TextView tvQuickSearch;
@@ -141,6 +142,7 @@ public class DetailActivity extends BaseActivity {
         tvActor = findViewById(R.id.tvActor);
         tvDirector = findViewById(R.id.tvDirector);
         tvDes = findViewById(R.id.tvDes);
+        tvPlayUrl = findViewById(R.id.tvPlayUrl);
         tvPlay = findViewById(R.id.tvPlay);
         tvSort = findViewById(R.id.tvSort);
         tvCollect = findViewById(R.id.tvCollect);
@@ -267,6 +269,8 @@ public class DetailActivity extends BaseActivity {
                         vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex).selected = false;
                     }
                     vodInfo.playFlag = newFlag;
+                    //更新播放地址
+                    setTextShow(tvPlayUrl, "播放地址:", vodInfo.seriesMap.get(vodInfo.playFlag).get(0).url);
                     seriesFlagAdapter.notifyItemChanged(position);
                     refreshList();
                 }
@@ -473,6 +477,8 @@ public class DetailActivity extends BaseActivity {
                             } else
                                 flag.selected = false;
                         }
+                        //设置播放地址
+                        setTextShow(tvPlayUrl, "播放地址:", vodInfo.seriesMap.get(vodInfo.playFlag).get(0).url);
 
                         seriesFlagAdapter.setNewData(vodInfo.seriesFlags);
                         mGridViewFlag.scrollToPosition(flagScrollTo);

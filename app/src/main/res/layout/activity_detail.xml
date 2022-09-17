@@ -44,7 +44,7 @@
                     android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/vs_5"
+                    android:layout_marginBottom="2mm"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -54,7 +54,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/vs_5"
+                    android:layout_marginBottom="2mm"
                     android:orientation="horizontal">
 
                     <TextView
@@ -122,7 +122,7 @@
                     android:id="@+id/tvActor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/vs_5"
+                    android:layout_marginBottom="2mm"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/color_CCFFFFFF"
@@ -132,7 +132,16 @@
                     android:id="@+id/tvDirector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/vs_5"
+                    android:layout_marginBottom="2mm"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/color_CCFFFFFF"
+                    android:textSize="@dimen/ts_20" />
+
+                <TextView
+                    android:id="@+id/tvPlayUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/color_CCFFFFFF"
@@ -144,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.2"
-                    android:maxLines="4"
+                    android:maxLines="3"
                     android:textColor="@color/color_CCFFFFFF"
                     android:textSize="@dimen/ts_20" />
 
