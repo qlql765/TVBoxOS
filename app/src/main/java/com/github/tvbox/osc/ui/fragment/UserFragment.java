@@ -21,6 +21,7 @@ import com.github.tvbox.osc.ui.activity.LivePlayActivity;
 import com.github.tvbox.osc.ui.activity.PushActivity;
 import com.github.tvbox.osc.ui.activity.SearchActivity;
 import com.github.tvbox.osc.ui.activity.SettingActivity;
+import com.github.tvbox.osc.ui.activity.FastSearchActivity;
 import com.github.tvbox.osc.ui.adapter.HomeHotVodAdapter;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.util.HawkConfig;
@@ -137,20 +138,21 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                 }
             }
         });
-        // takagen99 : Long press to delete VOD History on Home Page
+        // takagen99 : Long press to delete VOD History on Home Page 豆瓣长按聚搜，历史长按删除
         homeHotVodAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
                 if (ApiConfig.get().getSourceBeanList().isEmpty())
                     return false;
                 Movie.Video vod = ((Movie.Video) adapter.getItem(position));
-                if (vod.id != null && !vod.id.isEmpty()) {
+                // Additional Check if : Home Rec 0=豆瓣, 1=推荐, 2=历史
+                if ((vod.id != null && !vod.id.isEmpty()) && (Hawk.get(HawkConfig.HOME_REC, 0) == 2)) {
                     homeHotVodAdapter.remove(position);
                     VodInfo vodInfo = RoomDataManger.getVodInfo(vod.sourceKey, vod.id);
                     RoomDataManger.deleteVodRecord(vod.sourceKey, vodInfo);
                     Toast.makeText(getContext(), "已删除历史记录", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent newIntent = new Intent(mContext, SearchActivity.class);
+                    Intent newIntent = new Intent(mContext, FastSearchActivity.class);
                     newIntent.putExtra("title", vod.name);
                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mActivity.startActivity(newIntent);

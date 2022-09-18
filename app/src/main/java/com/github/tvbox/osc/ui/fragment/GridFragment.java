@@ -21,6 +21,7 @@ import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
+import com.github.tvbox.osc.ui.activity.FastSearchActivity;
 
 /**
  * @author pj567
@@ -107,6 +108,22 @@ public class GridFragment extends BaseLazyFragment {
                     bundle.putString("sourceKey", video.sourceKey);
                     jumpActivity(DetailActivity.class, bundle);
                 }
+            }
+        });
+        // takagen99 : Long Press to Fast Search 长按图片聚搜
+        gridAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                FastClickCheckUtil.check(view);
+                Movie.Video video = gridAdapter.getData().get(position);
+                if (video != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", video.id);
+                    bundle.putString("sourceKey", video.sourceKey);
+                    bundle.putString("title", video.name);
+                    jumpActivity(FastSearchActivity.class, bundle);
+                }
+                return true;
             }
         });
         gridAdapter.setLoadMoreView(new LoadMoreView());
