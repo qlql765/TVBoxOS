@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -23,8 +24,10 @@ import com.github.tvbox.osc.subtitle.widget.SimpleSubtitleView;
 import com.github.tvbox.osc.ui.adapter.ParseAdapter;
 import com.github.tvbox.osc.ui.adapter.SelectDialogAdapter;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
+import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.PlayerHelper;
+import com.github.tvbox.osc.util.SubtitleHelper;
 import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
@@ -120,7 +123,8 @@ public class VodController extends BaseController {
     TextView mPlayLoadNetSpeed;
     TextView mVideoSize;
     public SimpleSubtitleView mSubtitleView;
-    public TextView mZimuBtn;
+    TextView mZimuBtn;
+    TextView mAudioTrackBtn;
 
     Handler myHandle;
     Runnable myRunnable;
@@ -180,6 +184,10 @@ public class VodController extends BaseController {
         mVideoSize = findViewById(R.id.tv_videosize);
         mSubtitleView = findViewById(R.id.subtitle_view);
         mZimuBtn = findViewById(R.id.zimu_select);
+        mAudioTrackBtn = findViewById(R.id.audio_track_select);
+
+        int subtitleTextSize = SubtitleHelper.getTextSize(mActivity);
+        mSubtitleView.setTextSize(subtitleTextSize);
 
         myHandle=new Handler();
         myRunnable = new Runnable() {
@@ -336,6 +344,39 @@ public class VodController extends BaseController {
 //                myHandle.postDelayed(myRunnable, myHandleSeconds);
                 try {
                     int playerType = mPlayerConfig.getInt("pl");
+                    ArrayList<Integer> exsitPlayerTypes = PlayerHelper.getExistPlayerTypes();
+                    int playerTypeIdx = 0;
+                    int playerTypeSize = exsitPlayerTypes.size();
+                    for(int i = 0; i<playerTypeSize; i++) {
+                        if (playerType == exsitPlayerTypes.get(i)) {
+                            if (i == playerTypeSize - 1) {
+                                playerTypeIdx = 0;
+                            } else {
+                                playerTypeIdx = i + 1;
+                            }
+                        }
+                    }
+                    playerType = exsitPlayerTypes.get(playerTypeIdx);
+                    mPlayerConfig.put("pl", playerType);
+                    updatePlayerCfgView();
+                    listener.updatePlayerCfg();
+                    listener.replay(false);
+//                    hideBottom();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mPlayerBtn.requestFocus();
+            }
+        });
+
+        mPlayerBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+//                myHandle.removeCallbacks(myRunnable);
+//                myHandle.postDelayed(myRunnable, myHandleSeconds);
+                FastClickCheckUtil.check(view);
+                try {
+                    int playerType = mPlayerConfig.getInt("pl");
                     int defaultPos = 0;
                     ArrayList<Integer> players = PlayerHelper.getExistPlayerTypes();
                     ArrayList<Integer> renders = new ArrayList<>();
@@ -386,6 +427,7 @@ public class VodController extends BaseController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return true;
             }
         });
         mPlayerIJKBtn.setOnClickListener(new OnClickListener() {
@@ -487,7 +529,6 @@ public class VodController extends BaseController {
                 }
             }
         });
-        // takagen99: Add long press to reset counter
         mPlayerTimeSkipBtn.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -518,7 +559,28 @@ public class VodController extends BaseController {
         mZimuBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                FastClickCheckUtil.check(view);
                 listener.selectSubtitle();
+                hideBottom();
+            }
+        });
+        mZimuBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mSubtitleView.setVisibility(View.GONE);
+                mSubtitleView.destroy();
+                mSubtitleView.clearSubtitleCache();
+                mSubtitleView.isInternal = false;
+                hideBottom();
+                Toast.makeText(getContext(), "字幕已关闭", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        mAudioTrackBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FastClickCheckUtil.check(view);
+                listener.selectAudioTrack();
                 hideBottom();
             }
         });
@@ -552,6 +614,7 @@ public class VodController extends BaseController {
             mPlayerTimeStartBtn.setText(PlayerUtils.stringForTime(mPlayerConfig.getInt("st") * 1000));
             mPlayerTimeSkipBtn.setText(PlayerUtils.stringForTime(mPlayerConfig.getInt("et") * 1000));
             mPlayerTimeStepBtn.setText(Hawk.get(HawkConfig.PLAY_TIME_STEP, 5) + "s");
+            mAudioTrackBtn.setVisibility((playerType == 1) ? VISIBLE : GONE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -560,6 +623,10 @@ public class VodController extends BaseController {
     public void setTitle(String playTitleInfo) {
         mPlayTitle.setText(playTitleInfo);
         mPlayTitle1.setText(playTitleInfo);
+    }
+
+    public void setUrlTitle(String playTitleInfo) {
+        mPlayTitle.setText(playTitleInfo);
     }
 
     public void resetSpeed() {
@@ -573,6 +640,8 @@ public class VodController extends BaseController {
 
         void playPre();
 
+        void prepared();
+
         void changeParse(ParseBean pb);
 
         void updatePlayerCfg();
@@ -582,6 +651,8 @@ public class VodController extends BaseController {
         void errReplay();
 
         void selectSubtitle();
+
+        void selectAudioTrack();
     }
 
     public void setListener(VodControlListener listener) {
@@ -692,6 +763,9 @@ public class VodController extends BaseController {
                 listener.errReplay();
                 break;
             case VideoView.STATE_PREPARED:
+                mPlayLoadNetSpeed.setVisibility(GONE);
+                listener.prepared();
+                break;
             case VideoView.STATE_BUFFERED:
                 mPlayLoadNetSpeed.setVisibility(GONE);
                 break;
