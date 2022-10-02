@@ -201,3 +201,6 @@
 -keep class com.github.catvod.crawler.*{*;}
 # 迅雷下载模块
 -keep class com.xunlei.downloadlib.** {*;}
+
+#熊大fongMi-JAR支持
+-keep class com.google.gson.**{*;}
