@@ -204,3 +204,5 @@
 
 #熊大fongMi-JAR支持
 -keep class com.google.gson.**{*;}
+#影魔JS
+-keep class com.github.tvbox.quickjs.** {*;}
